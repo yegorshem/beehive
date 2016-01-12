@@ -1,0 +1,1 @@
+CREATE TABLE hive_data ( sample_id int NOT NULL AUTO_INCREMENT, hive_id varchar(30) NOT NULL, collection_date date NOT NULL, sample_period INT NOT NULL, mite_count INT NULL, submit_time timestamp DEFAULT CURRENT_TIMESTAMP, PRIMARY KEY (sample_id) )
