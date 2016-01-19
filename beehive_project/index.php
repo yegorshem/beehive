@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<?php	//Yegor SHemereko	//1/18/2016	//First implemetation of Beehive Project?><!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -32,9 +32,14 @@
             
             <fieldset class="form-group">
                 <label for="collection_date">Collection Date:</label>
-                <input required="required" type="text" class="form-control" name="collection_date"/>
+                <input required="required" type="date" class="form-control" name="collection_date"/>
             </fieldset>
             
+			<fieldset class="form-group">
+                <label for="sample_period">Sample Period:</label>
+                <input required="required" type="number" class="form-control" name="sample_period"/>
+            </fieldset>
+			
             <fieldset class="form-group">
                 <label for="mite_count">Mite Count:</label>
                 <input required="required" type="number" class="form-control" name="mite_count"/>

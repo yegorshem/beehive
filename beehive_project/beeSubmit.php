@@ -1,8 +1,9 @@
-<?php
+<?php	//Yegor SHemereko	//1/18/2016	//First implemetation of Beehive Project
 
     //initilizing variables
     $hive_id = "";
     $collection_date = "";
+    $sample_period = "";
     $mite_count = "";
     
     if (isset($_POST['submit'])) {
@@ -10,27 +11,34 @@
         //***Validate***
             $isValid = true;
             
-            //$fname
+            //hive_id
             if (!empty($_POST['hive_id'])) {
                 $hive_id = $_POST['hive_id'];
             } else {
-                echo '<p>Please enter a hive name.</p>';
+                echo '<p>Hive name not entered.</p>';
                 $isValid = false;
             }
             
-            //$lname
+            //collection_date
             if (!empty($_POST['collection_date'])) {
                 $collection_date = $_POST['collection_date'];
             } else {
-                echo '<p>Please enter date of sample collection.</p>';
+                echo '<p>Collection date not entered.</p>';
                 $isValid = false;
             }
             
-            //$company
+            //sample_periode
+            if (!empty($_POST['sample_period'])) {
+                $sample_period = $_POST['sample_period'];
+            } else {
+                echo '<p>Date of sample collection not entered.</p>';
+                $isValid = false;
+            }
+            //mite_count
             if (!empty($_POST['mite_count'])) {
                 $mite_count = $_POST['mite_count'];
             } else {
-                echo '<p>Please enter a mite count.</p>';
+                echo '<p>Mite count not entered.</p>';
                 $isValid = false;
             }
             
@@ -42,24 +50,26 @@
             //Connect to database
             require 'includes/bdb.php';
                 
-            //Escape the data
-            $hive_id = mysqli_real_escape_string($cnxn, $hive_id);
-            $collection_date = mysqli_real_escape_string($cnxn, $collection_date);
-            $mite_count = mysqli_real_escape_string($cnxn, $mite_count);
-           
-
- 
-            //Write to database
-            $sql = "INSERT INTO hive_data VALUES (NULL, '$hive_id', '$collection_date', NULL, '$mite_count', NULL)";
+            //Define query
+            $sql = "INSERT INTO hive_data VALUES (NULL, :hive_id, :collection_date, :sample_period, :mite_count, NULL)";
             
+            //Prepare the statement
+            $statement = $dbh->prepare($sql);
             
-            //Display Summary and thank you message
-            $result = @mysqli_query($cnxn, $sql);
+            //Bind parameters
+            $statement->bindParam(':hive_id', $hive_id, PDO::PARAM_STR);
+            $statement->bindParam(':collection_date', $collection_date, PDO::PARAM_STR);
+            $statement->bindParam(':sample_period', $sample_period, PDO::PARAM_INT);
+            $statement->bindParam(':mite_count', $mite_count, PDO::PARAM_INT);
+            
+            //Execute
+            $result = $statement->execute();
+    
             if ($result) {
                 echo "<p>Thank you for your input.</p>";
                 return;                
             } else {
-                echo "<p>Error: " . mysqli_error($cnxn) . "</p>";
+                echo "<p>Error</p>";
             }
         }
     }
