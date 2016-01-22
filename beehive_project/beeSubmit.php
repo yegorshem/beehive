@@ -1,4 +1,4 @@
-<?php	//Yegor SHemereko	//1/18/2016	//First implemetation of Beehive Project
+<?php
 
     //initilizing variables
     $hive_id = "";
@@ -54,7 +54,7 @@
             $sql = "INSERT INTO hive_data VALUES (NULL, :hive_id, :collection_date, :sample_period, :mite_count, NULL)";
             
             //Prepare the statement
-            $statement = $dbh->prepare($sql);
+            $statement = $db->prepare($sql);
             
             //Bind parameters
             $statement->bindParam(':hive_id', $hive_id, PDO::PARAM_STR);
@@ -73,4 +73,4 @@
             }
         }
     }
-?>
+?>
